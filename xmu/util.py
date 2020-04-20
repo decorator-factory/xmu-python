@@ -7,9 +7,11 @@ from typing import Callable
 
 
 def splat(fn):
-    """
-    fn(x) -> fn(*x)
-    """
+    """splat(fn)([1, 2, 3]) <=> fn(1, 2, 3)"""
+    # WTF: I have no idea, but for some reason
+    # putting `@wraps` here breaks everything
+    # in the package
+    # (I shouldn't have done that anyway)
     def splatted(arg_iterable):
         return fn(*arg_iterable)
     return splatted

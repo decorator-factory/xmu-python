@@ -60,10 +60,10 @@ def run_code(code, expected_output, mode=exec, prefix=">>> "):
                         .ac {{margin: 4px; color: #ff0000; }}
 
                     ][
-                        table(2, 2)
-                            .ex[ Expected ] & !tt[ :raw {html.escape(expected_output)} rrr: ] &
-                            .ac[ Actual ]   & !tt[ :raw {html.escape(actual_output)} rrr: ]   &
-                        elbat
+                        table(2, 2)[
+                            [.ex[ Expected ]] [!tt[:raw {html.escape(expected_output)} rrr:]]
+                            [].ac[ Actual ] ] [!tt[:raw {html.escape(actual_output)}   rrr:]]   
+                        ]
                     ]
                 ]
             """

@@ -9,7 +9,6 @@ class PyramidRendererFactory:
         renderer was registered), type (the renderer type
         name), registry (the current application registry) and
         settings (the deployment settings dictionary). """
-        print(f"{info=}")
         self.info = info
 
     def __call__(self, value, system):
