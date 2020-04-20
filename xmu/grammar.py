@@ -65,13 +65,13 @@ raw_text: /\s*:raw(.|\n)+?rrr:/
 
 """
 
-parser = lark.Lark(default)
+parser = lark.Lark(default, maybe_placeholders=True)
 grammar = default
 
 def rebuild_parser(source=""):
     global parser, grammar
     grammar = rebuild_grammar(default, source)
-    parser = lark.Lark(grammar)
+    parser = lark.Lark(grammar, maybe_placeholders=True)
 
 def rebuild_grammar(initial_grammar, source=""):
     from .ext import default_extensions

@@ -210,7 +210,7 @@ foo!!!bar
 2
 ```
 
-## Parse a python expression
+## Parse the result of a python expression
 
 ```
 [   
@@ -296,12 +296,43 @@ Basically, XMU creates a random ID and creates
 a standalone style for it.
 
 ```html
-<style>#lwunnaxwqbgasdhs {
+<style>#aspefpsnfglktjgu {
     color: red;
     font-family: 'Comic Sans MS'; }
 </style>
-<emu-styled id=lwunnaxwqbgasdhs>
+<emu-styled id=aspefpsnfglktjgu>
     <h1>Solving FizzBuzz by the means of a DSL</h1>
+</emu-styled>
+```
+
+The advantage of using SASS is that you can define a nested style:
+
+```
+style [:raw
+    color: red;
+    font-family: 'Comic Sans MS';
+    b {
+        color: blue;
+    }
+rrr:][
+    header(1)[
+        Solving FizzBuzz by the means of a DSL
+    ]
+    bf[ This text will be blue]
+]
+```
+
+```html
+<style>
+    #jghejijhvudjuhvg {
+        color: red;
+        font-family: 'Comic Sans MS'; }
+        #jghejijhvudjuhvg b {
+            color: blue;}
+</style>
+<emu-styled id=jghejijhvudjuhvg>
+    <h1>Solving FizzBuzz by the means of a DSL</h1>
+    <b> This text will be blue </b>
 </emu-styled>
 ```
 
