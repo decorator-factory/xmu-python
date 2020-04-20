@@ -14,9 +14,9 @@ setuptools.setup(
     url="https://https://github.com/decorator-factory/xmu-python",
     packages=["xmu", "xmu.extensions"],
     install_requires=[
-        "attrdict>=2.0.1",
-        "lark-parser>=0.8.5",
-        "libsass==0.19.4",
+        "attrdict",
+        "lark-parser",
+        "libsass",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
