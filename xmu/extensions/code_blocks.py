@@ -1,5 +1,5 @@
 from .. import parse
-from ..ext import EmuExtension, register_extension
+from ..ext import XmuExtension, register_extension
 from ..util import namespace, splat
 from textwrap import dedent
 import warnings
@@ -84,7 +84,7 @@ def run_code(code, expected_output, mode=exec, prefix=">>> "):
 
 
 @register_extension
-class CodeBlocks(EmuExtension):
+class CodeBlocks(XmuExtension):
     """
     Code block for `highlight.js`
     """
@@ -96,7 +96,7 @@ class CodeBlocks(EmuExtension):
 
 
 @register_extension
-class PythonCodeBlockExec(EmuExtension):
+class PythonCodeBlockExec(XmuExtension):
     """
     Code block for `highlight.js` that takes
     a piece of python code and an expected
@@ -113,7 +113,7 @@ class PythonCodeBlockExec(EmuExtension):
 
 
 @register_extension
-class PythonCodeBlockEval(EmuExtension):
+class PythonCodeBlockEval(XmuExtension):
     name = "tagf_py_eval"
     rule = r'"py-eval" tag_normal tag_normal'
 

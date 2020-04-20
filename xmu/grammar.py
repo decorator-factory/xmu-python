@@ -22,7 +22,7 @@ tag_pre: "pre" tag_normal
 tag_comment: /comment|todo|bug|doc/ tag_normal
 tag_unknown: "!" TAG_NAME tag_normal
 tag_var: "$" tag_normal
-tag_varemu: "$emu" tag_normal
+tag_varxmu: "$xmu" tag_normal
 TAG_NAME: /[-a-zA-Z]+/
 ?normal_tags: tag_comment
             | tag_title
@@ -30,7 +30,7 @@ TAG_NAME: /[-a-zA-Z]+/
             | tag_pre
             | tag_normal
             | tag_var
-            | tag_varemu
+            | tag_varxmu
             
 
 // tag function: tag(a, b, c, ...)[element]
@@ -44,8 +44,8 @@ tagf_header: "header" "(" POSITIVE_INTEGER ")" tag_normal
 tagf_div_id: "#" ID_NAME tag_normal
 tagf_div_class: "." CLASS_NAME+ tag_normal
 tagf_link: "a" tag_normal tag_normal
-ID_NAME: /[a-zA-Z_]+/
-CLASS_NAME: /[a-zA-Z-]+/
+ID_NAME: /[_a-zA-Z0-9]+/
+CLASS_NAME: /[-a-zA-Z0-9]+/
 
 ?function_tags: tagf_fontsize
               | tagf_header

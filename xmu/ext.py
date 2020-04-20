@@ -3,7 +3,7 @@ from .util import namespace, splat
 default_extensions = {}
 from .grammar import rebuild_parser
 
-class EmuExtension:
+class XmuExtension:
     grammar_entry_point = "CUSTOM_TAGS"
     name = "default_extension"
     rule = '"example" MY_INTEGER'
@@ -35,9 +35,9 @@ class EmuExtension:
             return f"<number>{int(a) + int(b)}</number>"
 
 
-def register_extension(extension: typing.Type[EmuExtension]):
-    if not isinstance(extension, type) or not issubclass(extension, EmuExtension):
-        raise TypeError("An extension must be an EmuExtension subclass")
+def register_extension(extension: typing.Type[XmuExtension]):
+    if not isinstance(extension, type) or not issubclass(extension, XmuExtension):
+        raise TypeError("An extension must be an XmuExtension subclass")
     global default_extensions
     default_extensions[extension.__name__] = extension
     rebuild_parser(extension.__name__)
@@ -50,7 +50,7 @@ def simple_tag_extension(tag_name, handler, rule_name=None):
         rule_name = f"tag_{rule_name}"
     else:
         rule_name = f"tag_{tag_name}"
-    class NewExtension(EmuExtension):
+    class NewExtension(XmuExtension):
         name = rule_name
         rule = f'"{tag_name}" tag_normal'
         helpers = {}

@@ -8,7 +8,7 @@ ext.simple_tag_extension("%extends", lambda name: '{% extends "' + name + '" %}'
 
 
 @ext.register_extension
-class JinjaBlock(ext.EmuExtension):
+class JinjaBlock(ext.XmuExtension):
     name = "tagf_jinja_block"
     rule = r'"%block" "(" JINJA_BLOCK_NAME ")" tag_normal'
     helpers = {"JINJA_BLOCK_NAME": r"/[a-zA-Z_]+/"}

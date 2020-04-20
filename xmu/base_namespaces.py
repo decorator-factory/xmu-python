@@ -20,6 +20,8 @@ def ParseText():
 @namespace()
 def ParseLiterals():
     POSITIVE_INTEGER = int
+    ID_NAME = str
+    CLASS_NAME = str
 
 
 @namespace()

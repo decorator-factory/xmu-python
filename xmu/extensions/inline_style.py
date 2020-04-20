@@ -4,7 +4,7 @@ import sass
 
 
 @ext.register_extension
-class InlineStyle(ext.EmuExtension):
+class InlineStyle(ext.XmuExtension):
     name = "tagf_style"
     rule = r'"style" tag_normal tag_normal'
     helpers = {}
@@ -19,11 +19,11 @@ class InlineStyle(ext.EmuExtension):
             to_compile = f"#{uid} {{ {style} }}"
             css = sass.compile(string=to_compile)
             return f"<style>{css}</style>\n" \
-                   f"<emu-styled id={uid}>{element}</emu-styled>"
+                   f"<xmu-styled id={uid}>{element}</xmu-styled>"
 
 
 @ext.register_extension
-class InlineStyleLiterally(ext.EmuExtension):
+class InlineStyleLiterally(ext.XmuExtension):
     name = "tagf_lstyle"
     rule = r'"lstyle" "[" text "]" tag_normal'
     helpers = {}
@@ -31,4 +31,4 @@ class InlineStyleLiterally(ext.EmuExtension):
     @namespace(fn=splat)
     def handlers():
         def tagf_lstyle(css, element):
-            return f"<emu-styled style='{css}'>{element}</emu-styled>"
+            return f"<xmu-styled style='{css}'>{element}</xmu-styled>"

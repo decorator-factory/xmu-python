@@ -1,11 +1,13 @@
 import re
-from ..ext import simple_tag_extension, EmuExtension, register_extension
+from ..ext import simple_tag_extension, XmuExtension, register_extension
 from ..util import namespace, splat
 
 simple_tag_extension("bf", lambda e: f"<b>{e}</b>")
 simple_tag_extension("it", lambda e: f"<i>{e}</i>")
 simple_tag_extension("^", lambda e: f"<sup>{e}</sup>", "superscript")
 simple_tag_extension("_", lambda e: f"<sub>{e}</sub>", "subscript")
+
+# ?alpha -> &alpha;
 
 CONSTANTS = {
     "--": "&mdash;",
@@ -32,7 +34,7 @@ CONSTANTS = {
 CONSTANTS_REGEXP = "|".join(map(re.escape, CONSTANTS.keys()))
 
 @register_extension
-class Constant(EmuExtension):
+class Constant(XmuExtension):
     name = "tag_const"
     rule = rf'"?" /{CONSTANTS_REGEXP}/i'
     helpers = {}

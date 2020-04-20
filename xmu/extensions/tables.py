@@ -1,8 +1,8 @@
-from ..ext import EmuExtension, register_extension
+from ..ext import XmuExtension, register_extension
 from ..util import namespace, splat
 
 @register_extension
-class BasicTable(EmuExtension):
+class BasicTable(XmuExtension):
     name = "tagf_table"
     rule = ' "table" "(" POSITIVE_INTEGER "," POSITIVE_INTEGER ")" "[" tag_normal+ "]"'
 

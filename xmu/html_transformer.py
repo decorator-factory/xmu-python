@@ -22,7 +22,7 @@ class HtmlTransformer(lark.Transformer):
     def tag_var(self, expr):
         return str(eval(expr, __builtins__, self.context))
 
-    def tag_varemu(self, code):
+    def tag_varxmu(self, code):
         return parse_module.parse(
             eval(code, __builtins__, self.context),
             context=self.lookup
