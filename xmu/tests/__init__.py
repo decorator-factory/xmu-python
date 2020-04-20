@@ -16,6 +16,16 @@ def are_strings_close(
     return sm.ratio() >= threshold
 
 class TestParser(unittest.TestCase):
+    def assertClose(self, a, b, threshold=0.8, ignore_ws=True):
+        if not are_strings_close(a, b, threshold=threshold, ignore_ws=ignore_ws):
+            print("\nString a:")
+            print(a)
+            print("String b:")
+            print(b)
+            self.assertTrue(False)
+        else:
+            self.assertTrue(True)
+
     def test_sample_from_readme_works(self):
         # The single most important test!
         reference_html = """
@@ -43,7 +53,7 @@ class TestParser(unittest.TestCase):
             markdown = readme_file.read()
         xmu_sample = re.findall(r"```xmu((?:(?!```).|\n)+)```", markdown)[0]
         html = parse(xmu_sample)
-        self.assertTrue(are_strings_close(html, reference_html, threshold=0.7, ignore_ws=True))
+        self.assertClose(html, reference_html)
 
 
     def test_div_works(self):
@@ -74,16 +84,8 @@ class TestParser(unittest.TestCase):
                 Div with an id and multiple classes
             </div>
         """
-        self.assertTrue(
-            are_strings_close(
-                parsed,
-                expected,
+        self.assertClose(parsed,expected,threshold=0.9,)
 
-                threshold=0.9,
-                ignore_ws=True
-            )
-
-        )
 
 if __name__ == '__main__':
     unittest.main()

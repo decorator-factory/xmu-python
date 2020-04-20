@@ -6,8 +6,8 @@ class ConfigurableDiv(XmuExtension):
     name = "tagf_configurable_div"
     rule = r'"div" maybe_div_id maybe_div_class_names tag_normal'
     helpers = {
-        "maybe_div_id": r'("#" ID_NAME)?',
-        "maybe_div_class_names": r'("." CLASS_NAME*)?'
+        "maybe_div_id": r'["#" ID_NAME]',
+        "maybe_div_class_names": r'["." CLASS_NAME*]'
     }
 
     @namespace()
@@ -17,9 +17,9 @@ class ConfigurableDiv(XmuExtension):
             return f"<div{maybe_id}{maybe_classes}>{content}</div>"
 
         @splat
-        def maybe_div_id(*id_name):
+        def maybe_div_id(id_name):
             if id_name:
-                return f" id='{id_name[0]}' "
+                return f" id='{id_name}' "
             else:
                 return " "
 
