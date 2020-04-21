@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="xmu",
-    version="0.1.1",
+    version="0.1.2",
     author="Georgiy Kozlov",
     author_email="appendix.y.z@gmail.com",
     description="eXtensible MarkUp parser",
