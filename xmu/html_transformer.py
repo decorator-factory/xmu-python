@@ -25,5 +25,5 @@ class HtmlTransformer(lark.Transformer):
     def tag_varxmu(self, code):
         return parse_module.parse(
             eval(code, __builtins__, self.context),
-            context=self.lookup
+            context=self.context
         )
