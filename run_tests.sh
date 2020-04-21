@@ -1,3 +1,2 @@
 #!/bin/bash
-python -m unittest xmu.tests -v
-
+python -m unittest discover --verbose --failfast --locals

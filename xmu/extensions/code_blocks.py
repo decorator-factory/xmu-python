@@ -4,6 +4,7 @@ from ..util import namespace, splat
 from textwrap import dedent
 import warnings
 import html
+import builtins
 
 def format_code(language, code, style="", classes=""):
     lang_class = ("nohighlight"
@@ -16,38 +17,32 @@ def format_code(language, code, style="", classes=""):
             '</pre>'
 
 
-def sandbox(code, mode=exec):
-    output = ""
-
-    def overridden_print(*args, end="\n", sep=" "):
-        nonlocal output
-        output += sep.join(map(str, args)) + end
-
-    if mode == eval:
-        mode = lambda expr, eval=eval, repr=repr, overridden_print=overridden_print:\
-            overridden_print(repr(eval(expr)))
+def sandbox(code, mode="exec"):
+    if mode not in ("eval", "exec"):
+        raise ValueError(f"Mode must be either 'eval' or 'exec', got: {mode}")
 
     try:
-        @namespace(glob={"print": overridden_print})
-        def ns():
-            mode(code)
-        return output
+
+        if mode == "eval":
+            glob = {**builtins.__dict__}
+            output = repr(eval(code, glob))
+
+        elif mode == "exec":
+            output = ""
+            def overridden_print(*args, end="\n", sep=" "):
+                nonlocal output
+                output += sep.join(map(str, args)) + end
+            glob = {**builtins.__dict__, "print": overridden_print}
+            exec(code, glob)
+
     except Exception as e:
         return f"{e.__class__.__name__}: {e}"
-
-
-def run_code(code, expected_output, mode=exec, prefix=">>> "):
-    code = dedent(code).strip()
-    rendered_code = format_code("python", code)
-    actual_output = sandbox(code, mode)
-    if (
-            dedent(actual_output).strip() == dedent(expected_output).strip()
-            or "#!skip" in code
-    ):
-        warning = ""
     else:
-        message = f"Expected: {expected_output}, got: {actual_output}"
-        warning = parse(
+        return output
+
+
+def render_test_fail_warning(expected_output, actual_output):
+    return parse(
             f"""[
                     fas[exclamation-triangle]
                     [Test failed]
@@ -68,7 +63,20 @@ def run_code(code, expected_output, mode=exec, prefix=">>> "):
                 ]
             """
         )
-        warnings.warn(message)
+
+
+def run_code(code, expected_output, mode, prefix=">>> "):
+    code = dedent(code).strip()
+    rendered_code = format_code("python", code)
+    actual_output = sandbox(code, mode)
+    if (
+            dedent(actual_output).strip() == dedent(expected_output).strip()
+            or "#!skip" in code
+    ):
+        warning = ""
+    else:
+        warning = render_test_fail_warning(expected_output, actual_output)
+        warnings.warn(f"Expected: {expected_output}, got: {actual_output}")
 
     rendered_output = format_code(
         "python",
@@ -109,7 +117,7 @@ class PythonCodeBlockExec(XmuExtension):
     @namespace(fn=splat)
     def handlers():
         def tagf_py_exec(code, expected_output):
-            return run_code(code, expected_output, mode=exec, prefix="")
+            return run_code(code, expected_output, mode="exec", prefix="")
 
 
 @register_extension
@@ -120,5 +128,5 @@ class PythonCodeBlockEval(XmuExtension):
     @namespace(fn=splat)
     def handlers():
         def tagf_py_eval(code, expected_output):
-            return run_code(code, expected_output, mode=eval, prefix=">>> ")
+            return run_code(code, expected_output, mode="eval", prefix=">>> ")
 
