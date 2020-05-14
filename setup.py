@@ -11,7 +11,7 @@ setuptools.setup(
     description="eXtensible MarkUp parser",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://https://github.com/decorator-factory/xmu-python",
+    url="https://github.com/decorator-factory/xmu-python",
     packages=["xmu", "xmu.extensions"],
     install_requires=[
         "attrdict",
